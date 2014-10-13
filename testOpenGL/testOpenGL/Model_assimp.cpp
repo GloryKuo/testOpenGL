@@ -1,5 +1,6 @@
 #include "Model_assimp.h"
-#include <GL/glut.h>
+#include "IL\il.h"
+#include <string.h>
 
 #define aisgl_min(x,y) (x<y?x:y)
 #define aisgl_max(x,y) (y>x?y:x)
@@ -8,6 +9,8 @@ Model_assimp::Model_assimp() : Model()
 {
 	float pos[3] = {0,0,0};
 	m_scene_center = new Vertex(pos, NULL);
+
+	Only_Mesh = false;
 	// get a handle to the predefined STDOUT log stream and attach
 	// it to the logging system. It remains active for all further
 	// calls to aiImportFile(Ex) and aiApplyPostProcessing.
@@ -24,6 +27,11 @@ Model_assimp::Model_assimp() : Model()
 
 Model_assimp::~Model_assimp()
 {
+	textureIdMap.clear();
+	if(textureIds){
+		delete [] textureIds;
+		textureIds = NULL;
+	}
 	// cleanup - calling 'aiReleaseImport' is important, as the library 
 	// keeps internal resources until the scene is freed again. Not 
 	// doing so can cause severe resource leaking.
@@ -49,6 +57,9 @@ bool Model_assimp::loadAsset(std::string path)
 		Vertex *min = boundBox[4];   //(0,0,0)
 		for(int i=0;i<3;i++)
 			m_scene_center->position[i] = min->position[i] + width[i]/2;
+
+		if(! loadGLTextures(m_scene, path))
+			printf("Texture Loading error:\t%s\n", path);
 		return true;
 	}
 	return false;
@@ -140,6 +151,14 @@ void Model_assimp::drawModel()
 
 	glTranslatef(-m_scene_center->position[0], -m_scene_center->position[1], -m_scene_center->position[2]);
 
+	if(! Only_Mesh){
+		glEnable(GL_TEXTURE_2D);
+		glShadeModel(GL_SMOOTH);		 // Enables Smooth Shading
+		glClearDepth(1.0f);				// Depth Buffer Setup
+		glEnable(GL_DEPTH_TEST);		// Enables Depth Testing
+		glDepthFunc(GL_LEQUAL);			// The Type Of Depth Test To Do
+	}
+
 	if(scene_list == 0){
 		scene_list = glGenLists(1);
 		glNewList(scene_list, GL_COMPILE);
@@ -174,6 +193,19 @@ void Model_assimp::recursive_render(const aiScene *sc, const aiNode* nd)
 			glEnable(GL_LIGHTING);
 		}
 
+		// texture--------------------------------
+		if(! Only_Mesh){
+			if(mesh->mColors[0] != NULL)
+			{
+				glEnable(GL_COLOR_MATERIAL);
+			}
+			else
+			{
+				glDisable(GL_COLOR_MATERIAL);
+			}
+		}
+		// texture--------------------------------
+
 		for (t = 0; t < mesh->mNumFaces; ++t) {
 			const aiFace* face = &mesh->mFaces[t];
 			GLenum face_mode;
@@ -191,8 +223,13 @@ void Model_assimp::recursive_render(const aiScene *sc, const aiNode* nd)
 				int index = face->mIndices[i];
 				if(mesh->mColors[0] != NULL)
 					glColor4fv((GLfloat*)&mesh->mColors[0][index]);
-				if(mesh->mNormals != NULL) 
+				if(mesh->mNormals != NULL){ 
+					if(mesh->HasTextureCoords(0))		//HasTextureCoords(texture_coordinates_set)
+					{
+						glTexCoord2f(mesh->mTextureCoords[0][index].x, mesh->mTextureCoords[0][index].y); //mTextureCoords[channel][vertex]
+					}
 					glNormal3fv(&mesh->mNormals[index].x);
+				}
 				glVertex3fv(&mesh->mVertices[index].x);
 			}
 
@@ -241,7 +278,20 @@ void Model_assimp::apply_material(const aiMaterial *mtl)
 	float shininess, strength;
 	int two_sided;
 	int wireframe;
-	unsigned int max;
+	unsigned int max;	// changed: to unsigned
+
+	// texture -------------------------------------------------------------------
+	int texIndex = 0;
+	aiString texPath;	//contains filename of texture
+
+	if(AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, texIndex, &texPath))
+	{
+		//bind texture
+		unsigned int texId = *textureIdMap[texPath.data];
+		glBindTexture(GL_TEXTURE_2D, texId);
+	}
+
+	// texture -------------------------------------------------------------------
 
 	set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
 	if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
@@ -288,9 +338,126 @@ void Model_assimp::apply_material(const aiMaterial *mtl)
 
 	max = 1;
 	if((AI_SUCCESS == aiGetMaterialIntegerArray(mtl, AI_MATKEY_TWOSIDED, &two_sided, &max)) && two_sided)
-		glDisable(GL_CULL_FACE);
-	else 
 		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
 }
 
-// ----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+
+bool Model_assimp::loadGLTextures(const aiScene* scene, std::string modelpath)
+{
+	ILboolean success;
+
+	/* Before calling ilInit() version should be checked. */
+	if (ilGetInteger(IL_VERSION_NUM) < IL_VERSION)
+	{
+		/// wrong DevIL version ///
+		std::string err_msg = "Wrong DevIL version. Old devil.dll in system32/SysWow64?";
+		char* cErr_msg = (char *) err_msg.c_str();
+		printf("%s\n", err_msg);
+		return false;
+	}
+
+	ilInit(); /* Initialization of DevIL */
+
+	if (scene->HasTextures()) printf("Support for meshes with embedded textures is not implemented\n");
+
+	/* getTexture Filenames and Numb of Textures */
+	for (unsigned int m=0; m < scene->mNumMaterials; m++)
+	{
+		int texIndex = 0;
+		aiReturn texFound = AI_SUCCESS;
+
+		aiString path;	// filename
+
+		while (texFound == AI_SUCCESS)
+		{
+			texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
+			textureIdMap[path.data] = NULL; //fill map with textures, pointers still NULL yet
+			texIndex++;
+		}
+	}
+
+	int numTextures = textureIdMap.size();
+
+	/* array with DevIL image IDs */
+	ILuint* imageIds = NULL;
+	imageIds = new ILuint[numTextures];
+
+	/* generate DevIL Image IDs */
+	ilGenImages(numTextures, imageIds); /* Generation of numTextures image names */
+
+	/* create and fill array with GL texture ids */
+	textureIds = new GLuint[numTextures];
+	glGenTextures(numTextures, textureIds); /* Texture name generation */
+
+	/* define texture path */
+	//std::string texturepath = "../../../test/models/Obj/";
+
+	/* get iterator */
+	std::map<std::string, GLuint*>::iterator itr = textureIdMap.begin();
+
+	std::string basepath = getBasePath(modelpath);
+	for (int i=0; i<numTextures; i++)
+	{
+
+		//save IL image ID
+		std::string filename = (*itr).first;  // get filename
+		(*itr).second =  &textureIds[i];	  // save texture id for filename in map
+		itr++;								  // next texture
+
+
+		ilBindImage(imageIds[i]); /* Binding of DevIL image name */
+		std::string fileloc = basepath + filename;	/* Loading of image */
+
+		//success = ilLoadImage(fileloc.c_str());     // ***­ìª©***
+		success = ilLoadImage((const ILstring)fileloc.c_str());
+		if (success) /* If no error occured: */
+		{
+			success = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE); /* Convert every colour component into
+			unsigned byte. If your image contains alpha channel you can replace IL_RGB with IL_RGBA */
+			if (!success)
+			{
+				/* Error occured */
+				printf("Couldn't convert image\n");
+				return false;
+			}
+			//glGenTextures(numTextures, &textureIds[i]); /* Texture name generation */
+			glBindTexture(GL_TEXTURE_2D, textureIds[i]); /* Binding of texture name */
+			//redefine standard texture values
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); /* We will use linear
+			interpolation for magnification filter */
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); /* We will use linear
+			interpolation for minifying filter */
+			glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
+				ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
+				ilGetData()); /* Texture specification */
+		}
+		else
+		{
+			/* Error occured */
+			printf("Couldn't load Image: %s ERROR\n", fileloc);
+		}
+
+
+	}
+
+	ilDeleteImages(numTextures, imageIds); /* Because we have already copied image data into texture data
+	we can release memory used by image. */
+
+	//Cleanup
+	delete [] imageIds;
+	imageIds = NULL;
+
+	//return success;
+	return true;
+}
+
+//------------------------------------------------------------------------------------------
+
+std::string Model_assimp::getBasePath(const std::string& path)
+{
+	size_t pos = path.find_last_of("\\/");
+	return (std::string::npos == pos) ? "" : path.substr(0, pos + 1);
+}

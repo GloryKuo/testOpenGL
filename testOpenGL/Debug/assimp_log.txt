@@ -1,12 +1,19 @@
-Info,  T4176: Load ../models/c1/c1.obj
-Info,  T4176: Found a matching importer for this file format
-Info,  T4176: Import root directory is '../models/c1\'
-Error, T4176: OBJ: No object detected to attach a new mesh instance.
-Info,  T4176: Entering post processing pipeline
-Info,  T4176: RemoveRedundantMatsProcess finished. Removed 0 redundant and 1 unused materials.
-Info,  T4176: Points: 0, Lines: 0, Triangles: 1, Polygons: 0 (Meshes, X = removed)
-Info,  T4176: GenVertexNormalsProcess finished. Vertex normals have been calculated
-Info,  T4176: CalcTangentsProcess finished. Tangents have been calculated
-Info,  T4176: JoinVerticesProcess finished | Verts in: 55404 out: 12180 | ~78.0%
-Info,  T4176: Cache relevant are 1 meshes (18468 faces). Average output ACMR is 0.862086
-Info,  T4176: Leaving post processing pipeline
+Info,  T6032: Load ../models/t1/t1.obj
+Info,  T6032: Found a matching importer for this file format
+Info,  T6032: Import root directory is '../models/t1\'
+Error, T6032: OBJ: No object detected to attach a new mesh instance.
+Info,  T6032: Entering post processing pipeline
+Info,  T6032: RemoveRedundantMatsProcess finished. Removed 0 redundant and 1 unused materials.
+Warn,  T6032: Found 4 degenerated primitives
+Info,  T6032: Points: 1, Lines: 1, Triangles: 1, Polygons: 0 (Meshes, X = removed)
+Info,  T6032: Normal vectors are undefined for line and point meshes
+Skipping one or more lines with the same contents
+Info,  T6032: GenVertexNormalsProcess finished. Vertex normals have been calculated
+Info,  T6032: Tangents are undefined for line and point meshes
+Skipping one or more lines with the same contents
+Info,  T6032: CalcTangentsProcess finished. Tangents have been calculated
+Info,  T6032: JoinVerticesProcess finished | Verts in: 52147 out: 10900 | ~79.1%
+Error, T6032: This algorithm works on triangle meshes only
+Skipping one or more lines with the same contents
+Info,  T6032: Cache relevant are 1 meshes (17380 faces). Average output ACMR is 0.842520
+Info,  T6032: Leaving post processing pipeline
