@@ -1,0 +1,10 @@
+Info,  T8308: Load ../models/closet/closet.ply
+Info,  T8308: Found a matching importer for this file format
+Info,  T8308: Import root directory is '../models/closet\'
+Info,  T8308: Entering post processing pipeline
+Info,  T8308: Points: 0, Lines: 0, Triangles: 1, Polygons: 0 (Meshes, X = removed)
+Info,  T8308: GenVertexNormalsProcess finished. Vertex normals have been calculated
+Error, T8308: Failed to compute tangents; need UV data in channel0
+Info,  T8308: JoinVerticesProcess finished | Verts in: 47004 out: 7836 | ~83.3%
+Info,  T8308: Cache relevant are 1 meshes (15668 faces). Average output ACMR is 0.735767
+Info,  T8308: Leaving post processing pipeline
