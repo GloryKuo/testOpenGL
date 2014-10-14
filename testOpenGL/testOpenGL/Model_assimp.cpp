@@ -246,6 +246,7 @@ void Model_assimp::recursive_render(const aiScene *sc, const aiNode* nd)
 	glPopMatrix();
 }
 
+
 // ----------------------------------------------------------------------------
 void Model_assimp::color4_to_float4(const aiColor4D *c, float f[4])
 {
@@ -437,7 +438,7 @@ bool Model_assimp::loadGLTextures(const aiScene* scene, std::string modelpath)
 		else
 		{
 			/* Error occured */
-			printf("Couldn't load Image: %s ERROR\n", fileloc);
+			printf("Couldn't load Image: %s ERROR\n", fileloc.c_str());
 		}
 
 
