@@ -37,3 +37,5 @@ Icon
 
 # The caches for the Visual Studio
 *.opensdf
+
+testOpenGL/testOpenGL/assimp_log.txt

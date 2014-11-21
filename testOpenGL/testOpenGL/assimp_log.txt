@@ -1,10 +1,10 @@
-Info,  T2492: Load ../models/Bulbasaur/Bulbasaur.obj
-Info,  T2492: Found a matching importer for this file format
-Info,  T2492: Import root directory is '../models/Bulbasaur\'
-Info,  T2492: Entering post processing pipeline
-Info,  T2492: RemoveRedundantMatsProcess finished. Removed 0 redundant and 1 unused materials.
-Info,  T2492: Points: 0, Lines: 0, Triangles: 2, Polygons: 0 (Meshes, X = removed)
-Info,  T2492: CalcTangentsProcess finished. Tangents have been calculated
-Info,  T2492: JoinVerticesProcess finished | Verts in: 4716 out: 1429 | ~69.7%
-Info,  T2492: Cache relevant are 2 meshes (1572 faces). Average output ACMR is 1.040076
-Info,  T2492: Leaving post processing pipeline
+Info,  T6516: Load ../models/Bulbasaur/Bulbasaur.obj
+Info,  T6516: Found a matching importer for this file format
+Info,  T6516: Import root directory is '../models/Bulbasaur\'
+Info,  T6516: Entering post processing pipeline
+Info,  T6516: RemoveRedundantMatsProcess finished. Removed 0 redundant and 1 unused materials.
+Info,  T6516: Points: 0, Lines: 0, Triangles: 2, Polygons: 0 (Meshes, X = removed)
+Info,  T6516: CalcTangentsProcess finished. Tangents have been calculated
+Info,  T6516: JoinVerticesProcess finished | Verts in: 4716 out: 1429 | ~69.7%
+Info,  T6516: Cache relevant are 2 meshes (1572 faces). Average output ACMR is 1.040076
+Info,  T6516: Leaving post processing pipeline

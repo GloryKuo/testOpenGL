@@ -289,7 +289,7 @@ void Model_assimp::apply_material(const aiMaterial *mtl)
 	{
 		//bind texture
 		unsigned int texId = *textureIdMap[texPath.data];
-		glBindTexture(GL_TEXTURE_2D, texId);
+		glBindTexture(GL_TEXTURE_2D, texId);printf("texId = %u\n", texId);
 	}
 
 	// texture -------------------------------------------------------------------
@@ -392,7 +392,6 @@ bool Model_assimp::loadGLTextures(const aiScene* scene, std::string modelpath)
 	/* create and fill array with GL texture ids */
 	textureIds = new GLuint[numTextures];
 	glGenTextures(numTextures, textureIds); /* Texture name generation */
-
 	/* define texture path */
 	//std::string texturepath = "../../../test/models/Obj/";
 
