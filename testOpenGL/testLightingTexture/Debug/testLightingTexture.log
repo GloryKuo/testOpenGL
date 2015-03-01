@@ -1,4 +1,4 @@
-﻿已經開始建置於 2014/11/18 下午 02:40:48。
+﻿已經開始建置於 2015/2/7 下午 05:40:21。
      1>節點 2 (Build 目標) 上的專案 "E:\GitHub\testOpenGL\testOpenGL\testLightingTexture\testLightingTexture.vcxproj"。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
@@ -10,4 +10,4 @@
 
 建置成功。
 
-經過時間 00:00:00.27
+經過時間 00:00:00.30

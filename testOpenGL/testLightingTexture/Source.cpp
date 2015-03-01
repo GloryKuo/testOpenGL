@@ -23,65 +23,119 @@ void display(void)
 
     //材质设置有效一直保持到改变为止。
 
-    //第一行第一列的球，仅有慢反射光，而无环境光喝镜面光。
-    glPushMatrix();
-    glTranslatef(-3.75, 3.0, 0.0);    //第一个球的位置
+    ////第一行第一列的球，仅有慢反射光，而无环境光喝镜面光。
+    //glPushMatrix();
+    //glTranslatef(-3.75, 3.0, 0.0);    //第一个球的位置
+    //glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    //glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
+    //glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+    //glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+    //glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
+    //glPopMatrix();            //弹出矩阵。
+
+    ////第一行第二列的球，有漫反射光喝镜面光，低高光，并无环境光
+    //glPushMatrix();
+    //glTranslatef(-1.25, 3.0, 0.0);
+    //glMaterialfv(GL_FRONT,GL_AMBIENT, no_mat);    
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    //glMaterialfv(GL_FRONT,GL_SPECULAR, mat_specular);
+    //glMaterialfv(GL_FRONT,GL_SHININESS, low_shininess);
+    //glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+    //glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
+    //glPopMatrix();
+
+    ////第一行第三列绘制的球有漫反射光和镜面光，并有很亮的高光，而无环境光 
+    //glPushMatrix();
+    //glTranslatef(1.25, 3.0, 0.0);
+    //glMaterialfv(GL_FRONT,GL_AMBIENT, no_mat);    
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    //glMaterialfv(GL_FRONT,GL_SPECULAR, mat_specular);
+    //glMaterialfv(GL_FRONT,GL_SHININESS, hig_shininess);
+    //glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+    //glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
+    //glPopMatrix();
+
+    ////第一行第四列绘制的球有漫反射光和辐射光，而无环境和镜面反射光
+    //glPushMatrix();
+    //glTranslatef(3.75, 3.0, 0.0);
+    //glMaterialfv(GL_FRONT,GL_AMBIENT, no_mat);    
+    //glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    //glMaterialfv(GL_FRONT,GL_SPECULAR, no_mat);
+    //glMaterialfv(GL_FRONT,GL_SHININESS, hig_shininess);
+    //glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+    //glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
+    //glPopMatrix();
+
+    //glPopMatrix();        //这里会沿用以前的设置的材质。
+    //glTranslatef(3.75, 0.0, 0.0);
+    //glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
+    //glPopMatrix();
+
+    //
+    ////其他的不写了。。
+    ////第二行第一列绘制的球有漫反射光和环境光，而镜面反射光。
+    ////第二行第二列绘制的球有漫反射光、环境光和镜面光，且有低高光
+    ////第二行第三列绘制的球有漫反射光、环境光和镜面光，且有很亮的高光
+    ////第二行第四列绘制的球有漫反射光、环境光和辐射光，而无镜面光
+    ////第三行第一列绘制的球有漫反射光和有颜色的环境光，而无镜面光。
+    ////第三行第二列绘制的球有漫反射光和有颜色的环境光以及镜面光，且有低高光
+    ////第三行第三列绘制的球有漫反射光和有颜色的环境光以及镜面光，且有很亮的高光
+    ////第三行第四列绘制的球有漫反射光和有颜色的环境光以及辐射光，而无镜面光
+
+	glPushMatrix();
+	glRotatef(45.0f, 1.0f, -1.0f, 0.0f); 
     glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
     glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
     glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-    glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
+    glBegin(GL_QUADS);
+		//前面
+		glVertex3f(-40.0, 40.0, 20.0);
+		glVertex3f(-40.0, -40.0, 20.0);
+		glVertex3f(40.0, -40.0, 20.0);
+		glVertex3f(40.0, 40.0, 20.0);
+		glNormal3f(0.0, 0.0, 1.0);
+
+		//右面
+		glVertex3f(40.0, 40.0, 20.0);
+		glVertex3f(40.0, -40.0, 20.0);
+		glVertex3f(40.0, -40.0, -20.0);
+		glVertex3f(40.0, 40.0, -20.0);
+		glNormal3f(1.0, 0.0, 0.0);
+			
+		//後面
+		glVertex3f(-40.0, 40.0, -20.0);
+		glVertex3f(-40.0, -40.0, -20.0);
+		glVertex3f(40.0, -40.0, -20.0);
+		glVertex3f(40.0, 40.0, -20.0);
+		glNormal3f(0.0, 0.0, -1.0);
+		
+		//左面
+		glVertex3f(-40.0, 40.0, 20.0);
+		glVertex3f(-40.0, -40.0, 20.0);
+		glVertex3f(-40.0, -40.0, -20.0);
+		glVertex3f(-40.0, 40.0, -20.0);
+		glNormal3f(-1.0, 0.0, 0.0);
+
+		//上面
+		glVertex3f(-40.0, 40.0, -20.0);
+		glVertex3f(-40.0, 40.0, 20.0);
+		glVertex3f(40.0, 40.0, 20.0);
+		glVertex3f(40.0, 40.0, -20.0);
+		glNormal3f(0.0, 1.0, 0.0);
+
+		//下面
+		glVertex3f(-40.0, -40.0, -20.0);
+		glVertex3f(-40.0, -40.0, 20.0);
+		glVertex3f(40.0, -40.0, 20.0);
+		glVertex3f(40.0, -40.0, -20.0);
+		glNormal3f(0.0, -1.0, 0.0);
+
+	glEnd();
     glPopMatrix();            //弹出矩阵。
 
-    //第一行第二列的球，有漫反射光喝镜面光，低高光，并无环境光
-    glPushMatrix();
-    glTranslatef(-1.25, 3.0, 0.0);
-    glMaterialfv(GL_FRONT,GL_AMBIENT, no_mat);    
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT,GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT,GL_SHININESS, low_shininess);
-    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-    glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
-    glPopMatrix();
-
-    //第一行第三列绘制的球有漫反射光和镜面光，并有很亮的高光，而无环境光 
-    glPushMatrix();
-    glTranslatef(1.25, 3.0, 0.0);
-    glMaterialfv(GL_FRONT,GL_AMBIENT, no_mat);    
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT,GL_SPECULAR, mat_specular);
-    glMaterialfv(GL_FRONT,GL_SHININESS, hig_shininess);
-    glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-    glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
-    glPopMatrix();
-
-    //第一行第四列绘制的球有漫反射光和辐射光，而无环境和镜面反射光
-    glPushMatrix();
-    glTranslatef(3.75, 3.0, 0.0);
-    glMaterialfv(GL_FRONT,GL_AMBIENT, no_mat);    
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT,GL_SPECULAR, no_mat);
-    glMaterialfv(GL_FRONT,GL_SHININESS, hig_shininess);
-    glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
-    glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
-    glPopMatrix();
-
-    glPopMatrix();        //这里会沿用以前的设置的材质。
-    glTranslatef(3.75, 0.0, 0.0);
-    glutSolidSphere(1, 30,30);//利用库函数绘制一个半径为1的球体。
-    glPopMatrix();
-
-    
-    //其他的不写了。。
-    //第二行第一列绘制的球有漫反射光和环境光，而镜面反射光。
-    //第二行第二列绘制的球有漫反射光、环境光和镜面光，且有低高光
-    //第二行第三列绘制的球有漫反射光、环境光和镜面光，且有很亮的高光
-    //第二行第四列绘制的球有漫反射光、环境光和辐射光，而无镜面光
-    //第三行第一列绘制的球有漫反射光和有颜色的环境光，而无镜面光。
-    //第三行第二列绘制的球有漫反射光和有颜色的环境光以及镜面光，且有低高光
-    //第三行第三列绘制的球有漫反射光和有颜色的环境光以及镜面光，且有很亮的高光
-    //第三行第四列绘制的球有漫反射光和有颜色的环境光以及辐射光，而无镜面光
     glutSwapBuffers();            //交换缓冲区。显示图形
 }
 
@@ -92,7 +146,7 @@ void init (void)
 
     
     GLfloat light_diffuse[]= { 0.0, 0.0, 1.0, 1.0};//蓝色        //有灯光才能体现材质的效果，他的灯光的强度是与的关系。貌似是两个相乘什么的。(0-1)范围。
-    GLfloat light_position[] = { 0, 3, 2.0, 0.0 };        //设置点光源的矩阵，这个向量也忒奇怪了，1不跟着变，0跟着变，设置为透视之后又是1跟着变，0不跟着变。
+    GLfloat light_position[] = { 0.0, 0.0, 100.0, 0.0 };        //设置点光源的矩阵，这个向量也忒奇怪了，1不跟着变，0跟着变，设置为透视之后又是1跟着变，0不跟着变。
     GLfloat light_specular[] = { 1.0, 1.0, 0.0, 1.0 };        //反射光
     GLfloat light_ambient[] = {0.5, 0.5, 0.5, 1.0};
 
@@ -103,10 +157,11 @@ void init (void)
 
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);    //如果什么都不设置，GL_LIGHT有默认的值。
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
+    /*glCullFace(GL_BACK);
+    glEnable(GL_CULL_FACE);*/
     glDepthFunc(GL_LEQUAL);    
     glEnable(GL_DEPTH_TEST);
+
 }
 
 //当窗口大小改变时，会调用这个函数
@@ -119,7 +174,7 @@ void reshape(GLsizei w,GLsizei h)
     glMatrixMode(GL_PROJECTION);    //设置矩阵模式为投影变换矩阵，
     glLoadIdentity();                //变为单位矩阵
     //gluPerspective(60, (GLfloat)w / h, 0, 1000);    //设置投影矩阵
-    glOrtho(-6.0, 6.0, -6.0 * h / w, 6.0* h / w, -10, 10);    //为了不变形，则要长和宽成比例
+    glOrtho(-100.0, 100.0, -100.0 * h / w, 100.0* h / w, -100, 100);    //为了不变形，则要长和宽成比例
     glMatrixMode(GL_MODELVIEW);        //设置矩阵模式为视图矩阵(模型)
     glLoadIdentity();                //变为单位矩阵
 }

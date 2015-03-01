@@ -10,6 +10,13 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lighting.cpp" />
+    <ClCompile Include="TracBall.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TracBall.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CCF9A10E-6F82-4C4B-877C-11C54FD4CD77}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -78,19 +85,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Face.cpp" />
-    <ClCompile Include="model.cpp" />
-    <ClCompile Include="Model_assimp.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Vertex.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Face.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="Model_assimp.h" />
-    <ClInclude Include="Vertex.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
