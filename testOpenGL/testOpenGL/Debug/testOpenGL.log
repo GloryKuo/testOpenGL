@@ -1,18 +1,18 @@
-﻿已經開始建置於 2015/3/1 下午 03:26:58。
+﻿已經開始建置於 2015/3/3 下午 03:18:35。
      1>節點 2 (Build 目標) 上的專案 "E:\GitHub\testOpenGL\testOpenGL\testOpenGL\testOpenGL.vcxproj"。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I../include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Lighting.cpp
          Lighting.cpp
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(47): warning C4101: 'aspectRatio' : 未參考的區域變數
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(315): warning C4101: 'menu_lvl2' : 未參考的區域變數
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(395): warning C4018: '<' : signed/unsigned 不相符
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(402): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(48): warning C4101: 'aspectRatio' : 未參考的區域變數
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(349): warning C4101: 'menu_lvl2' : 未參考的區域變數
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(429): warning C4018: '<' : signed/unsigned 不相符
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(436): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(218) : 請參閱 'fopen' 的宣告
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(429): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(463): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 11.0\vc\include\time.inl(112) : 請參閱 'localtime' 的宣告
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(422): warning C4101: 'rc' : 未參考的區域變數
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(420): warning C4101: 'clnHeight' : 未參考的區域變數
-     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(420): warning C4101: 'clnWidth' : 未參考的區域變數
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(456): warning C4101: 'rc' : 未參考的區域變數
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(454): warning C4101: 'clnHeight' : 未參考的區域變數
+     1>e:\github\testopengl\testopengl\testopengl\lighting.cpp(454): warning C4101: 'clnWidth' : 未參考的區域變數
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\testOpenGL\testOpenGL\Debug\testOpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:../lib/DevIL /LIBPATH:../lib/assimp /LIBPATH:../lib assimp.lib DevIL.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\testOpenGL\testOpenGL\Debug\testOpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\testOpenGL\testOpenGL\Debug\testOpenGL.lib" /MACHINE:X86 Debug\Lighting.obj
          Debug\TracBall.obj
@@ -21,4 +21,4 @@
 
 建置成功。
 
-經過時間 00:00:01.16
+經過時間 00:00:01.47

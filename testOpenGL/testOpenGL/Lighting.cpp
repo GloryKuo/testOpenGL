@@ -25,22 +25,23 @@ int model = 1, mode = 2;
 float translate_x = 0.0f, translate_y = 0.0f, translate_z = 0.0f;
 
 //Lighting parameters
-/*
-GLfloat  ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };
-GLfloat  diffuseLight[] = { 0.6f, 0.6f, 0.6f, 1.0f };	
-GLfloat  specular[] = { 0.0f, 0.0f, 0.0f, 0.0f};
-*/
 
 GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+GLfloat diffuseLight[] = { 0.85f, 0.85f, 0.85f, 1.0f };
 GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat pos[]={10.0, 1.0, 0.0, 1.0};
+GLfloat pos[]={-40.0f, -40.0f, 25.0f, 1.0f};
+float sideLength = 1000.0f;
+float markSideLength = 20.0f;
 
 TracBall myTrackBall;
 
 /*∫Iπœ•Œ*/
 BOOL WriteBitmapFile(char * filename,int width,int height,unsigned char * bitmapData); 
 void SaveScreenShot();
+//////////////////
+void InitGL(void);
+void drawPlane(double w, double h, int sides, double nx, double ny, double nz);
+
 
 void My_Reshape(int w, int h)
 {
@@ -58,12 +59,13 @@ void My_Reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(60.0, (GLfloat)w / (GLfloat)h, 1.0, 128.0);
+	gluPerspective(60.0, (GLfloat)w / (GLfloat)h, 1.0, 200.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	gluLookAt(0.0,30.0,-30.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0,0.0,50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	//InitGL();
 }
 
 void drawTriangle()
@@ -106,24 +108,51 @@ void My_Display(void)
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	float sidelength = 20.0f;
 	switch(model){
 
 		case 1:
 			//glColor3ub(180,180,180);
 			//glutSolidTeapot(10.0);			
 			//glutSolidSphere(10.0, 128, 128);
-			glBegin(GL_QUADS);
-				glNormal3f(0.0f, 0.0f, 1.0f);
-				glVertex3f(-sidelength, -sidelength, 0.0f);
-				glNormal3f(0.0f, 0.0f, 1.0f);
-				glVertex3f(sidelength, -sidelength, 0.0f);
-				glNormal3f(0.0f, 0.0f, 1.0f);
-				glVertex3f(sidelength, sidelength, 0.0f);
-				glNormal3f(0.0f, 0.0f, 1.0f);
-				glVertex3f(-sidelength, sidelength, 0.0f);
-				//glNormal3f(0.0f, 0.0f, 1.0f);
+			//glBegin(GL_QUADS);
+			//	glNormal3f(0.0f, 0.0f, 1.0f);
+			//	glVertex3f(-sideLength, -sideLength, 0.0f);
+			//	glNormal3f(0.0f, 0.0f, 1.0f);
+			//	glVertex3f(sideLength, -sideLength, 0.0f);
+			//	glNormal3f(0.0f, 0.0f, 1.0f);
+			//	glVertex3f(sideLength, sideLength, 0.0f);
+			//	glNormal3f(0.0f, 0.0f, 1.0f);
+			//	glVertex3f(-sideLength, sideLength, 0.0f);
+			//	//glNormal3f(0.0f, 0.0f, 1.0f);
+			//glEnd();
+			glPushMatrix();			
+			glColor3f(1.0f, 1.0f, 1.0f);
+			drawPlane(sideLength, sideLength, 200, 0.0, 0.0, 1.0);
+			glPopMatrix();
+
+			/*glPushMatrix();
+			glTranslatef(markSideLength, markSideLength, 0.0f);
+			glRotatef(90, 1.0f, 0.0f, 0.0f);
+			drawPlane(sideLength, sideLength, 100, 0.0, 1.0, 0.0);
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(markSideLength, markSideLength, 0.0f);
+			glRotatef(-90, 0.0f, 1.0f, 0.0f);
+			drawPlane(sideLength, sideLength, 100, 1.0, 0.0, 0.0);
+			glPopMatrix();*/
+
+			glPushMatrix();	
+			glBegin(GL_LINE_LOOP);
+				glColor3f(0.0f, 0.0f, 0.0f);
+				glLineWidth(3.0f);
+				glVertex3f(-markSideLength, -markSideLength, 0.0f);
+				glVertex3f(markSideLength, -markSideLength, 0.0f);
+				glVertex3f(markSideLength, markSideLength, 0.0f);
+				glVertex3f(-markSideLength, markSideLength, 0.0f);
 			glEnd();
+			glPopMatrix();
+
 			break;
 		case 2:
 			glColor3ub(0,255,0);
@@ -163,18 +192,18 @@ void InitGL(void)
 	glEnable(GL_DEPTH_TEST);
 	
 	glEnable(GL_LIGHTING);
-	//glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_COLOR_MATERIAL);
 	
 
 
 	// Setup and enable light 0
 	glLightfv(GL_LIGHT0,GL_AMBIENT,ambientLight);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,diffuseLight);
-	//glLightfv(GL_LIGHT0,GL_SPECULAR,specular);	
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.8);
-	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.01);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
-	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+	glLightfv(GL_LIGHT0,GL_SPECULAR,specular);	
+	/*glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.02);
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);*/
+	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);    //ºv≈Tspecular
 
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
 	glEnable(GL_LIGHT0);
@@ -183,15 +212,15 @@ void InitGL(void)
 
 void SetMaterial() 
 { 
-   float material_ambient[]  = { 0.2, 0.2, 0.2, 1.0}; 
+   float material_ambient[]  = { 0.1, 0.1, 0.1, 1.0}; 
    float material_diffuse[]  = { 1.0, 1.0, 1.0, 1.0}; 
    float material_specular[] = { 0.5, 0.5, 0.5, 1.0}; 
    GLfloat mat_shininess[] = { 100.0 };
 
    glMaterialfv( GL_FRONT, GL_AMBIENT,  material_ambient); 
    glMaterialfv( GL_FRONT, GL_DIFFUSE,  material_diffuse); 
-   glMaterialfv( GL_FRONT, GL_SPECULAR, material_specular); 
-   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+   /*glMaterialfv( GL_FRONT, GL_SPECULAR, material_specular); 
+   glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);*/
 
 } 
 
@@ -211,13 +240,17 @@ void My_Keyboard(unsigned char key, int x, int y)
 {
 	switch( key ){
 		case 'z': case 'Z':
+			system("cls");
 			cout << "z button down" << endl;
 			translate_z += 0.5f;
+			printf("eye z = %f", translate_z);
 			
 			break;
 		case 'x': case 'X':
+			system("cls");
 			cout << "x button down" << endl;
 			translate_z -= 0.5f;
+			printf("eye z = %f", translate_z);
 			break;
 		case 'q': case 'Q':
 			exit(0);
@@ -295,6 +328,7 @@ void My_SpecialKeys( int key, int x, int y )
 void My_MouseMotion(int x, int y)
 {
 	myTrackBall.Motion(x,y,winWidth,winHeight);
+	InitGL();
 	glutPostRedisplay();
 }
 
@@ -420,10 +454,10 @@ void SaveScreenShot()
 	int clnWidth,clnHeight;	//client width and height
 	static void * screenData;
 	RECT rc;
-	int len = 800 * 600 * 3;
+	int len = 600 * 600 * 3;
 	screenData = malloc(len);
 	memset(screenData,0,len);
-	glReadPixels(0, 0, 800, 600, GL_RGB, GL_UNSIGNED_BYTE, screenData);
+	glReadPixels(0, 0, 600, 600, GL_RGB, GL_UNSIGNED_BYTE, screenData);
 
 	time_t t = time(0);
 	struct tm *now = localtime(&t);
@@ -431,10 +465,29 @@ void SaveScreenShot()
 	sprintf_s(lpstrFilename,sizeof(lpstrFilename),"%d.%d.%d.bmp",now->tm_hour, now->tm_min, now->tm_sec);
 	cout<<"save the screen shot at\n"<<lpstrFilename<<endl;
 
-	WriteBitmapFile(lpstrFilename,800,600,(unsigned char*)screenData);
+	WriteBitmapFile(lpstrFilename,600,600,(unsigned char*)screenData);
 	
 	free(screenData);
 
+}
+
+/////////////////////////////////////////////
+void drawPlane(double w, double h, int sides, double nx, double ny, double nz){
+  glPushMatrix();
+  for(int i=0; i<sides; i++){
+    for(int j=0; j<sides; j++){
+      double ax = -w/2.0 + w/double(sides) * double(i);
+      double bx = -h/2.0 + h/double(sides) * double(j);
+      glNormal3d( nx, ny, nz);
+      glBegin(GL_QUADS);
+      glVertex3d( ax,                 bx,                 0.0);
+      glVertex3d( ax+w/double(sides), bx,                 0.0);
+      glVertex3d( ax+w/double(sides), bx+h/double(sides), 0.0);
+      glVertex3d( ax,                 bx+h/double(sides), 0.0);
+      glEnd();
+    }
+  }
+  glPopMatrix();
 }
 
 
