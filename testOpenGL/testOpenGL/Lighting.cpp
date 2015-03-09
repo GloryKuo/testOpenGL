@@ -26,10 +26,10 @@ float translate_x = 0.0f, translate_y = 0.0f, translate_z = 0.0f;
 
 //Lighting parameters
 
-GLfloat ambientLight[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-GLfloat diffuseLight[] = { 0.85f, 0.85f, 0.85f, 1.0f };
+GLfloat ambientLight[] = { 0.111365f, 0.111365f, 0.111365f, 1.0f };
+GLfloat diffuseLight[] = { 0.877703f, 0.877703f, 0.877703f, 1.0f };
 GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-GLfloat pos[]={-40.0f, -40.0f, 25.0f, 1.0f};
+GLfloat pos[]={-44.7017f, -40.7555f, 47.8466f, 1.0f};
 float sideLength = 1000.0f;
 float markSideLength = 20.0f;
 
@@ -200,9 +200,9 @@ void InitGL(void)
 	glLightfv(GL_LIGHT0,GL_AMBIENT,ambientLight);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,diffuseLight);
 	glLightfv(GL_LIGHT0,GL_SPECULAR,specular);	
-	/*glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.0);
 	glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.02);
-	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);*/
+	glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.0);
 	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);    //ºv≈Tspecular
 
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
